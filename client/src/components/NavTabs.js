@@ -6,7 +6,7 @@ function NavTabs() {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <a className="navbar-brand" id="navName">Crypto-Watch</a>
-      <div class="collapse navbar-collapse" id="navbarText">
+      <div className="collapse navbar-collapse" id="navbarText">
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
             <Link to="/" className={window.location.pathname === "/" ? "nav-link" : "nav-link"}>
@@ -24,8 +24,8 @@ function NavTabs() {
             </Link>
           </li>
         </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <span class="navbar-text">Users name goes here</span>
+        <ul className="nav navbar-nav navbar-right">
+            <span className="navbar-text">Username goes here</span>
         </ul> 
       </div>
     </nav>

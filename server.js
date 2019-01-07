@@ -19,5 +19,5 @@ app.get("*", function(req, res) {
 });
 
 app.listen(PORT, function() {
-    console.log(`:earth_americas: ===> API server now on port ${PORT}!`)
+    console.log(`🌍 ==> API server now on port ${PORT}!`)
 })
