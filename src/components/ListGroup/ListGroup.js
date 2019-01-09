@@ -7,7 +7,7 @@ const ListGroup = props => (
     <li className="list-group-item list-group-item-action">About the Currencies</li>
     <li className="list-group-item list-group-item-action">Recommended Portfolios</li>
     <li className="list-group-item list-group-item-action">About the Website</li>
-    <li className="list-group-item list-group-item-action">The Creator</li>
+    <li className="list-group-item list-group-item-action">The Creators</li>
   </ul>
 )
   
