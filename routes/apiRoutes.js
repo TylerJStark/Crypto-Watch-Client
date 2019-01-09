@@ -8,7 +8,8 @@ router.get("/allCurrencies", (req, res) => {
     qs: {
       start: 1,
       limit: 20,
-      convert: 'USD'
+      convert: 'USD',
+      interval: 'hourly'
     },
     headers: {
       'X-CMC_PRO_API_KEY': '1c76830c-9c66-4ac4-841a-79bd663c7059'

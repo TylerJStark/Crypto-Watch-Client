@@ -14,7 +14,8 @@ class Stocks extends Component {
 
   state = {
     allCurrencies: [],
-    activeStock: {}
+    activeStock: {},
+    clicked: []
   }
 
   componentDidMount() {
@@ -26,8 +27,11 @@ class Stocks extends Component {
         allCurrencies: response.data,
         activeStock: response.data.data[0]
       });
-      console.log(this.state.allCurrencies);
+      
     })
+    console.log(this.state.allCurrencies);
+    console.log("-------------- ACTIVE STOCK ------------------");
+    console.log(this.state.activeStock);
   }
 
   writeNames() {
@@ -36,15 +40,16 @@ class Stocks extends Component {
     } else {
       return this.state.allCurrencies.data.map((currency, index) => 
         // <button key={index} clickEvent={this.setActiveStock(currency)}>{currency.name}</button>
-        <ul>
-          <StockBtn key={index}>{currency.name}</StockBtn>
-        </ul>
+        <StockBtn key={index} index={this.index} stockClick={this.stockClick}>{currency.name}</StockBtn>
       )
     }
   }
 
   stockClick = index => {
-    console.log(index);
+    console.log(this.state.activeStock);
+    this.setState({
+      activeStock: this.state.allCurrencies.data[index]
+    });
   }
 
   render () {
