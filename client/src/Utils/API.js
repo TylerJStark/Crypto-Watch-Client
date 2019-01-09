@@ -1,7 +1,7 @@
-import axios from 'axios';
+// import axios from 'axios';
 
-export default {
-    allCryptoCoins: function() {
-        return axios.get("/api/allCurrencies");
-    }
-}
+// export default {
+//     allCryptoCoins: function() {
+//         return axios.get("/api/allCurrencies");
+//     }
+// }
