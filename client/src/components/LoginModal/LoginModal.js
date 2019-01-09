@@ -1,7 +1,7 @@
 import React from "react";
 import "./LoginModal.css";
 
-const SignupModal = props => (
+const LoginModal = props => (
   <div class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
       <div class="modal-content">

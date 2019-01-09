@@ -7,6 +7,7 @@ import NavTabs from "./components/NavTabs";
 import Home from "./components/Pages/Home";
 import Stocks from "./components/Pages/Stocks";
 import About from "./components/Pages/About";
+import "./index.css";
 
 function App() {
     return (

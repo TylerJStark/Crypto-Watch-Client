@@ -29,7 +29,7 @@ class Home extends Component {
             <div>
                     <Jumbotron/>
                 <Row>
-                    <div class="col text-center"> 
+                    <div class="col"> 
                         <LogIn>Login</LogIn>
                         <SignUp>Sign Up</SignUp>
                     </div>

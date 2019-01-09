@@ -10,7 +10,7 @@ function NavTabs() {
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
             <Link to="/" className={window.location.pathname === "/" ? "nav-link" : "nav-link"}>
-              Home
+            Home
             </Link>
           </li>
           <li className="nav-item">
