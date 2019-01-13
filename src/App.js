@@ -12,7 +12,7 @@ function App() {
     return (
       <Router>
         <div>
-          <NavTabs />
+          {/* <NavTabs /> */}
           <Route exact path="/" component={Home} />
           <Route exact path="/stocks" component={Stocks} />
           <Route exact path="/about" component={About} />

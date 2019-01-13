@@ -12,13 +12,7 @@ import Column from "../../Column";
 import Jumbotron from "../Jumbotron";
 
 class Home extends Component {
-    // state = {
-    //     friends, 
-    //     score: 0,
-    //     highScore: 0,
-    //     rightWrong: "",
-    //     clicked: []
-    // };
+
 
     signupClick = () => {
         // <SignupModal/>

@@ -1,34 +1,60 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import './NavTabs.css';
+import './NavTabs.scss';
 
 function NavTabs() {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a className="navbar-brand" id="navName">Crypto-Watch</a>
-      <div className="collapse navbar-collapse" id="navbarText">
-        <ul className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <Link to="/" className={window.location.pathname === "/" ? "nav-link" : "nav-link"}>
-              Home
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/stocks" className={window.location.pathname === "/stocks" ? "nav-link" : "nav-link"}>
-              Stocks
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="/about" className={window.location.pathname === "/about" ? "nav-link" : "nav-link"}>
-              About
-            </Link>
-          </li>
-        </ul>
-        <ul className="nav navbar-nav navbar-right">
-            <span className="navbar-text">Username goes here</span>
-        </ul> 
-      </div>
-    </nav>
+    <div class="admin">
+  <header class="admin__header">
+    <a href="#" class="logo">
+      <h1><img src="assets/media/Crypto-Watch-logo.png">
+      </img></h1>
+    </a>
+    <div class="toolbar">
+      <button class="btn btn--primary">Stock button</button>
+      <a href="#" class="about">
+        About
+      </a>
+      <a href="#" class="logout">
+        Log Out
+      </a>
+    </div>
+  </header>
+  <nav class="admin__nav">
+    <ul class="menu">
+      <li class="menu__item">
+        <a class="menu__link" href="#">Item</a>
+      </li>
+      <li class="menu__item">
+        <a class="menu__link" href="#">Item</a>
+      </li>
+      <li class="menu__item">
+        <a class="menu__link" href="#">Item</a>
+      </li>
+      <li class="menu__item">
+        <a class="menu__link" href="#">Item</a>
+      </li>
+      <li class="menu__item">
+        <a class="menu__link" href="#">Item</a>
+      </li>
+      <li class="menu__item">
+        <a class="menu__link" href="#">Item</a>
+      </li>
+      <li class="menu__item">
+        <a class="menu__link" href="#">Item</a>
+      </li>
+      <li class="menu__item">
+        <a class="menu__link" href="#">Item</a>
+      </li>
+      <li class="menu__item">
+        <a class="menu__link" href="#">Item</a>
+      </li>
+      <li class="menu__item">
+        <a class="menu__link" href="#">Item</a>
+      </li>
+    </ul>
+  </nav>
+  </div>
   )
 }
 

@@ -1,4 +1,10 @@
 #signupBtn {
     width: 80px;
-    margin-left: 2px;
+    margin-left: 9px;
+    position: fixed;
+    width: 80px;
+    margin-right: 2px;
+    position: fixed;
+    margin-top: 170px;
+    margin-left: 280px;
 }
