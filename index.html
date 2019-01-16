@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+    
+
+    <!--
+      manifest.json provides metadata used when your web app is added to the
+      homescreen on Android. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+  </head>
+  <body>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root">
+      <div id="navbar">
+        <div id="wrapper">
+          <div id="footer">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
+</html>
+
+<script>
+
+(function() {
+  var $$ = function(selector, context) {
+    var context = context || document;
+    var elements = context.querySelectorAll(selector);
+    return [].slice.call(elements);
+  };
+
+  function _fncSliderInit($slider, options) {
+    var prefix = ".fnc-";
+
+    var $slider = $slider;
+    var $slidesCont = $slider.querySelector(prefix + "slider__slides");
+    var $slides = $$(prefix + "slide", $slider);
+    var $controls = $$(prefix + "nav__control", $slider);
+    var $controlsBgs = $$(prefix + "nav__bg", $slider);
+    var $progressAS = $$(prefix + "nav__control-progress", $slider);
+
+    var numOfSlides = $slides.length;
+    var curSlide = 1;
+    var sliding = false;
+    var slidingAT =
+      +parseFloat(getComputedStyle($slidesCont)["transition-duration"]) * 1000;
+    var slidingDelay =
+      +parseFloat(getComputedStyle($slidesCont)["transition-delay"]) * 1000;
+
+    var autoSlidingActive = false;
+    var autoSlidingTO;
+    var autoSlidingDelay = 5000; // default autosliding delay value
+    var autoSlidingBlocked = false;
+
+    var $activeSlide;
+    var $activeControlsBg;
+    var $prevControl;
+
+    function setIDs() {
+      $slides.forEach(function($slide, index) {
+        $slide.classList.add("fnc-slide-" + (index + 1));
+      });
+
+      $controls.forEach(function($control, index) {
+        $control.setAttribute("data-slide", index + 1);
+        $control.classList.add("fnc-nav__control-" + (index + 1));
+      });
+
+      $controlsBgs.forEach(function($bg, index) {
+        $bg.classList.add("fnc-nav__bg-" + (index + 1));
+      });
+    }
+
+    setIDs();
+
+    function afterSlidingHandler() {
+      $slider
+        .querySelector(".m--previous-slide")
+        .classList.remove("m--active-slide", "m--previous-slide");
+      $slider
+        .querySelector(".m--previous-nav-bg")
+        .classList.remove("m--active-nav-bg", "m--previous-nav-bg");
+
+      $activeSlide.classList.remove("m--before-sliding");
+      $activeControlsBg.classList.remove("m--nav-bg-before");
+      $prevControl.classList.remove("m--prev-control");
+      $prevControl.classList.add("m--reset-progress");
+      var triggerLayout = $prevControl.offsetTop;
+      $prevControl.classList.remove("m--reset-progress");
+
+      sliding = false;
+      var layoutTrigger = $slider.offsetTop;
+
+      if (autoSlidingActive && !autoSlidingBlocked) {
+        setAutoslidingTO();
+      }
+    }
+
+    function performSliding(slideID) {
+      if (sliding) return;
+      sliding = true;
+      window.clearTimeout(autoSlidingTO);
+      curSlide = slideID;
+
+      $prevControl = $slider.querySelector(".m--active-control");
+      $prevControl.classList.remove("m--active-control");
+      $prevControl.classList.add("m--prev-control");
+      $slider
+        .querySelector(prefix + "nav__control-" + slideID)
+        .classList.add("m--active-control");
+
+      $activeSlide = $slider.querySelector(prefix + "slide-" + slideID);
+      $activeControlsBg = $slider.querySelector(prefix + "nav__bg-" + slideID);
+
+      $slider
+        .querySelector(".m--active-slide")
+        .classList.add("m--previous-slide");
+      $slider
+        .querySelector(".m--active-nav-bg")
+        .classList.add("m--previous-nav-bg");
+
+      $activeSlide.classList.add("m--before-sliding");
+      $activeControlsBg.classList.add("m--nav-bg-before");
+
+      var layoutTrigger = $activeSlide.offsetTop;
+
+      $activeSlide.classList.add("m--active-slide");
+      $activeControlsBg.classList.add("m--active-nav-bg");
+
+      setTimeout(afterSlidingHandler, slidingAT + slidingDelay);
+    }
+
+    function controlClickHandler() {
+      if (sliding) return;
+      if (this.classList.contains("m--active-control")) return;
+      if (options.blockASafterClick) {
+        autoSlidingBlocked = true;
+        $slider.classList.add("m--autosliding-blocked");
+      }
+
+      var slideID = +this.getAttribute("data-slide");
+
+      performSliding(slideID);
+    }
+
+    $controls.forEach(function($control) {
+      $control.addEventListener("click", controlClickHandler);
+    });
+
+    function setAutoslidingTO() {
+      window.clearTimeout(autoSlidingTO);
+      var delay = +options.autoSlidingDelay || autoSlidingDelay;
+      curSlide++;
+      if (curSlide > numOfSlides) curSlide = 1;
+
+      autoSlidingTO = setTimeout(function() {
+        performSliding(curSlide);
+      }, delay);
+    }
+
+    if (options.autoSliding || +options.autoSlidingDelay > 0) {
+      if (options.autoSliding === false) return;
+
+      autoSlidingActive = true;
+      setAutoslidingTO();
+
+      $slider.classList.add("m--with-autosliding");
+      var triggerLayout = $slider.offsetTop;
+
+      var delay = +options.autoSlidingDelay || autoSlidingDelay;
+      delay += slidingDelay + slidingAT;
+
+      $progressAS.forEach(function($progress) {
+        $progress.style.transition = "transform " + delay / 1000 + "s";
+      });
+    }
+
+    $slider
+      .querySelector(".fnc-nav__control:first-child")
+      .classList.add("m--active-control");
+  }
+
+  var fncSlider = function(sliderSelector, options) {
+    var $sliders = $$(sliderSelector);
+
+    $sliders.forEach(function($slider) {
+      _fncSliderInit($slider, options);
+    });
+  };
+
+  window.fncSlider = fncSlider;
+})();
+
+/* not part of the slider scripts */
+
+/* Slider initialization
+options:
+autoSliding - boolean
+autoSlidingDelay - delay in ms. If audoSliding is on and no value provided, default value is 5000
+blockASafterClick - boolean. If user clicked any sliding control, autosliding won't start again
+*/
+fncSlider(".frontPageSlider", { autoSlidingDelay: 4000 });
+
+var $demoCont = document.querySelector(".demo-cont");
+
+[].slice
+  .call(document.querySelectorAll(".fnc-slide__action-btn"))
+  .forEach(function($btn) {
+    $btn.addEventListener("click", function() {
+      $demoCont.classList.toggle("credits-active");
+    });
+  });
+
+document
+  .querySelector(".demo-cont__credits-close")
+  .addEventListener("click", function() {
+    $demoCont.classList.remove("credits-active");
+  });
+
+document
+  .querySelector(".js-activate-global-blending")
+  .addEventListener("click", function() {
+    document
+      .querySelector(".frontPageSlider")
+      .classList.toggle("m--global-blending-active");
+  });
+
+</script>
+
+
+
+
+
+<!-- Hero Page Script -->
+<script>
+var canvas = document.getElementById('menu-highlight');
+var ctx = canvas.getContext('2d');
+var start = new Date().getTime() - 5000;
+var gradients = [-1];
+var offsetTop = -100;
+var isHighlightActive = false;
+theme.volume = 0.1;
+
+theme.play();
+
+var Particle = function() {
+  this.radius = (Math.random() * 1) + 0.5;
+  this.top = (Math.random() * 20) - 20;
+  this.left = Math.random() * 100;
+  this.speed = 1 / this.radius;
+  this.opacity = 1;
+  this.disintegrateRate = (Math.random() * 0.005) + 0.001;
+}
+
+var particles = [];
+
+for(var i = 0; i < 10; i++) {
+  particles.push(new Particle());
+}
+
+function drawHiglight() {
+  /* rect */
+  var currentTime = new Date().getTime();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  var grH = ctx.createLinearGradient(0, 0, 600, 0);
+  
+  if (currentTime - start > 5000 && gradients[0] < 0.1) {
+    start = new Date().getTime();
+    gradients = [1,1,0.9,0.7,0.6,0.5,0.5,0.4,0.3,0];  
+  }
+  
+  for(var i = 0; i < gradients.length; i++) {
+    grH.addColorStop('0.' + i, 'rgba(255,255,255,' + gradients[i] + ')');
+
+    if (gradients[i] > 0.1) {
+      gradients[i] -= 0.01;
+    }
+  }
+
+  ctx.fillStyle = grH;
+  ctx.fillRect(0, offsetTop, 600, 10);
+  /* end of rect */
+  
+  /* particles */
+  for(var i = 0; i < particles.length; i++) {
+    ctx.beginPath();
+    ctx.arc(particles[i].left, offsetTop + 15 + particles[i].top, particles[i].radius, 0, 2 * Math.PI);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(255,255,255,' + particles[i].opacity + ')';
+    ctx.fill();
+    
+    particles[i].left += particles[i].speed;
+    particles[i].opacity -= particles[i].disintegrateRate;
+    
+    if (particles[i].opacity < 0 || particles[i].left > 700) {
+      particles[i] = new Particle();
+    }
+  }
+  /* end of particles */
+  
+  if (isHighlightActive === true) {
+    requestAnimationFrame(drawHiglight);  
+  }
+}
+
+
+function highlight(element, event) {
+  event.stopImmediatePropagation();
+  offsetTop = element.offsetTop + 25;
+  start = new Date().getTime();
+  gradients = [1,1,0.9,0.7,0.6,0.5,0.5,0.4,0.3,0];
+  
+  if (isHighlightActive === false) {
+    isHighlightActive = true;
+    requestAnimationFrame(drawHiglight);
+  }
+}
+
+document.getElementById('main').onmouseover = function() {
+  if (offsetTop !== -100) offsetTop = -100;
+  isHighlightActive = false;
+}
+
+var isChatActive = false;
+var chatInput = document.getElementById('text');
+var chatLog = document.getElementById('chat-log');
+
+document.body.onkeydown = function(event){
+  if (event.keyCode === 13 && isChatActive === false) {
+    isChatActive = true;
+    document.getElementById('enter').style.display = 'none';
+    document.getElementById('chat-log').classList.add('active');
+    document.getElementById('chat-input').classList.add('active');
+    chatInput.focus();
+  } else if (event.keyCode === 13 && isChatActive === true) {
+    if (chatInput.value === 'no u') {
+      var message = document.createElement('div');
+      message.innerHTML = '[SureFourteen]: ' + chatInput.value;
+      chatLog.prepend(message);
+      var message = document.createElement('div');
+      message.style.color = 'rgb(255, 66, 66)';
+      message.innerHTML = '[Genji]: Understandable, have a nice day';
+      chatLog.prepend(message);
+    } else if (chatInput.value !== '') {
+      var message = document.createElement('div');
+      message.innerHTML = '[SureFourteen]: ' + chatInput.value;
+      chatLog.prepend(message);
+    }
+
+    isChatActive = false;
+    chatInput.value = '';
+    document.getElementById('enter').style.display = 'flex';
+    chatLog.classList.remove('active');
+    document.getElementById('chat-input').classList.remove('active');
+  }
+}
+
+document.body.focus();
+
+
+
+
+
+
+
+
+
+var app = new React({
+  el: '#app',
+  
+  data: {
+    posts: {},
+    character: "Thor",
+    loadInfo: false,
+    notFound: false,
+    isInfo: false,
+    noDesc: false
+  },
+  
+  methods: {
+    callAPI(){
+      this.isInfo = false;
+      axios.get(`https://gateway.marvel.com/v1/public/characters`,{
+        params: {
+          apikey: "96592ec9dedd9fb3f54343039b31caf7",
+          ts: "1",
+          hash: "276c7f01e16983415ba25c07b494a281989593fa",
+          name: this.character
+        }
+      })
+      .then(response => {
+        if(response.data.data.total == 0) {
+          
+          this.notFound = true
+          setTimeout(()=>{ 
+            this.notFound = false 
+          }, 2000);
+          
+        } else {
+          
+          if (response.data.data.results[0].description == '') {
+            this.noDesc = true
+          } else {
+            this.noDesc = false
+          }
+          
+          this.posts = response.data
+          this.loadInfo = true
+          
+        }
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    }
+  },
+  
+  mounted(){
+    this.callAPI();
+  }
+})
+
+React.config.devtools = false
+
+</script>

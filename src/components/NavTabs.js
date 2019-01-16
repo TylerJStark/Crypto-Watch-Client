@@ -25,33 +25,6 @@ function NavTabs() {
       <li class="menu__item">
         <a class="menu__link" href="#">Item</a>
       </li>
-      <li class="menu__item">
-        <a class="menu__link" href="#">Item</a>
-      </li>
-      <li class="menu__item">
-        <a class="menu__link" href="#">Item</a>
-      </li>
-      <li class="menu__item">
-        <a class="menu__link" href="#">Item</a>
-      </li>
-      <li class="menu__item">
-        <a class="menu__link" href="#">Item</a>
-      </li>
-      <li class="menu__item">
-        <a class="menu__link" href="#">Item</a>
-      </li>
-      <li class="menu__item">
-        <a class="menu__link" href="#">Item</a>
-      </li>
-      <li class="menu__item">
-        <a class="menu__link" href="#">Item</a>
-      </li>
-      <li class="menu__item">
-        <a class="menu__link" href="#">Item</a>
-      </li>
-      <li class="menu__item">
-        <a class="menu__link" href="#">Item</a>
-      </li>
     </ul>
   </nav>
   </div>

@@ -1,5 +1,5 @@
 .wrapper {
-    background: grey;
+    background: gray;
     height: 100%;
     display: flex;
     flex-flow: row wrap;

@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import {Line} from 'react-chartjs-2';
+import './chart.css';
 
 const Chart = props => (
     // constructor(props) {
@@ -18,7 +19,7 @@ const Chart = props => (
     //     }
     // }
 
-    <div className='chart'>
+    <div id="chartdiv" className='amcharts-graph-g3'>
         <Line
             data={props.chartData}
             options={{

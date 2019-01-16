@@ -1,7 +1,9 @@
 import React from "react";
-import "./StockBtn.css";
+import "./StockBtn.scss";
 
 const StockBtn = props => (
-    <button type="button" value={props.index} onClick={() => props.stockClick(props.index)} className="btn btn-secondary">{props.children}</button>
+    <div className="">
+    <button className="btn" value={props.index} onClick={() => props.stockClick(props.index)}>{props.children}</button>
+    </div>
 )
 export default StockBtn;

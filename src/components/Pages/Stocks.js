@@ -25,6 +25,7 @@ class Stocks extends Component {
 
   componentDidMount() {
     this.getAllCoins();
+    this.getChartData();
   }
 
   getAllCoins() {
@@ -33,17 +34,17 @@ class Stocks extends Component {
       .catch(err => console.log(err));
   }
   
-  // getInfo = query => {
-  //   API.coinInfo(query)
-  //     .then(res => {
-  //       console.log(res);
-  //       this.setState({
-  //         stockFullName: res.data.Data[0].CoinInfo.FullName,
-  //         supply: res.data.Data[0].ConversionInfo.Supply,
-  //         volume: res.data.Data[0].ConversionInfo.TotalVolume24H
-  //       })
-  //     })
-  // }
+  getInfo = query => {
+    API.coinInfo(query)
+      .then(res => {
+        console.log(res);
+        this.setState({
+          stockFullName: res.data.Data[0].CoinInfo.FullName,
+          supply: res.data.Data[0].ConversionInfo.Supply,
+          volume: res.data.Data[0].ConversionInfo.TotalVolume24H
+        })
+      })
+  }
 
   getSpecificCoin = query => {
     API.specificCoin(query)
@@ -85,6 +86,7 @@ class Stocks extends Component {
     },function() {
       console.log(this.state.activeStock);
       this.getChartData();
+      this.getInfo(this.state.activeStock);
     });
   };
 
@@ -96,13 +98,8 @@ class Stocks extends Component {
     }
   };
 
-  componentWillMount(){
-    this.getChartData();
-  };
-
   getChartData(){
     this.getSpecificCoin(this.state.activeStock);
-    // this.getInfo(this.state.activeStock);
     this.setState({
       chartData:{
         labels: ['9 Hours Ago', '8 Hours Ago', '7 Hours Ago', '6 Hours Ago', '5 Hours Ago', '4 Hours Ago', '3 Hours Ago', '2 Hours Ago', 'Current'],
@@ -129,7 +126,6 @@ class Stocks extends Component {
       </img></h1>
     </a>
     <div className="toolbar">
-      <button className="btn btn--primary">Stock button</button>
       <a href="#" className="about">
         About
       </a>
@@ -145,6 +141,8 @@ class Stocks extends Component {
     </ul>
   </nav>
 
+  
+
   <main class="admin__main">
     <h2></h2>
     <div class="dashboard">
@@ -152,11 +150,11 @@ class Stocks extends Component {
         <div class="card-container__container">
         <div class="player-card">
   <div class="content">
-  <img src="http://placehold.it/75x75/808080/000000"></img>
-			<h1>Crypto-Watch</h1>
-      <p><div>Name: {this.state.stockFullName}</div></p>
-      <p><div>Supply: {this.state.supply}</div></p>
-      <p><div>Total Volume Traded (24Hr): {this.state.volume}</div></p>
+  <header class="">
+      <h1 className='currency'><div>Name: {this.state.stockFullName}</div></h1>
+      <p class="currency"><div>Supply: {this.state.supply}</div></p>
+      <p class="currency"><div>Total Volume Traded (24Hr): {this.state.volume}</div></p>
+    </header>
 
   </div>
 </div>
@@ -174,14 +172,14 @@ class Stocks extends Component {
         <div className="content">
         <img src="http://placehold.it/75x75/808080/000000"></img>
 			<h1>Crypto-Watch</h1>
-          <strong>81.712</strong> Doohickeys
+          <strong></strong>
         </div>
         </div>
       </div>
       </div>
       <div class="dashboard__item dashboard__item--full">
         <div class="card-container__conatiner">
-        <div className="player-card">
+        <div className="player-card-chart">
         <div className="content">
         <Chart className="chart"
              chartData={this.state.chartData}/>
@@ -190,108 +188,8 @@ class Stocks extends Component {
         </div>
       </div>
     </div>
-    <p>read more about this in <a href="https://mxb.at/blog/css-grid-admin-dashboard/">this blogpost</a>.</p>
   </main>
   </div>
-
-
-
-//       <div className="jumbotron jumbotron-fluid background">
-//       <Container>
-//         <Row>
-//           <Column size="md-6">
-
-//           {/* <div class="navbar">
-//   <div class="item">
-//     <div class="fa fa-user"></div>
-//     <div class="label">Bitcoin</div>
-//   </div>
-//   <div class="item">
-//     <div class="fa fa-picture-o"></div>
-//     <div class="label">Photos</div>
-//   </div>
-//   <div class="item">
-//     <div class="fa fa-bell"></div>
-//     <div class="label">Notifications</div>
-//   </div>
-//   <div class="item">
-//     <div class="fa fa-wrench"></div>
-//     <div class="label">Setting</div>
-//   </div>
-//   <div class="item">
-//     <div class="fa fa-wrench"></div>
-//     <div class="label">Setting</div>
-//   </div>
-//   <div class="item">
-//     <div class="fa fa-wrench"></div>
-//     <div class="label">Setting</div>
-//   </div>
-//   <div class="item">
-//     <div class="fa fa-wrench"></div>
-//     <div class="label">Setting</div>
-//   </div>
-//   <div class="item">
-//     <div class="fa fa-search"></div>
-//     <div class="label">Search</div>
-//   </div>
-//   <div class="item">
-//     <div class="fa fa-search"></div>
-//     <div class="label">Search</div>
-//   </div>
-//   <div class="item">
-//     <div class="fa fa-power-off"></div>
-//     <div class="label">Logout</div>
-//   </div>
-
-// </div> */}
-
-// {/* Header & Logo */}
-// {/* <div class="admin">
-//   <header class="admin__header">
-//     <a href="#" class="logo">
-//       <h1>GridAdmin</h1>
-//     </a>
-//     <div class="toolbar">
-//       <button class="btn btn--primary">Add New Plumbus</button>
-//       <a href="#" class="logout">
-//         Log Out
-//       </a>
-//     </div>
-//   </header> */}
-
-
-
-
-//           <div className="list">
-//             <h1 className="text-left">All Crypto Coins</h1>
-//             <div>{this.createBtns()}</div>
-//           </div>
-//           </Column>
-//           <Column size="md-6">
-//           <div className="charthead">
-//             <h1 className="text-right">Stock Graph</h1>
-//             <Chart className="chart"
-//               chartData={this.state.chartData}/>
-//           </div>
-//           </Column>
-//         </Row>
-//         <Row>
-//           <Column size="md-6">
-//           <div className="stockdisc">
-//             <h1 className="text-left">Stock Description</h1>
-//             <div>Name: {this.state.stockFullName}</div>
-//             <div>Supply: {this.state.supply}</div>
-//             <div>Total Volume Traded (24Hr): {this.state.volume}</div>
-//           </div>
-//           </Column>
-//           <Column size="md-6">
-//           <div className="userstocks">
-//             <h1 className="text-right">User Chosen Stocks</h1>
-//           </div>
-//           </Column>
-//         </Row>
-//       </Container>   
-//     </div>
     )
   }
 }
