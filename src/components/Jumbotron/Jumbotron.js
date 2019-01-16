@@ -3,11 +3,11 @@ import "./Jumbotron.scss";
 
 const Jumbotron = props => (
   
-  // <div class="jumbotron jumbotron-fluid background">
-    // <img src="/assets/media/Crypto-Watch-logo.png"/>
+  <div class="jumbotron jumbotron-fluid background">
+    {/* // <img src="/assets/media/Crypto-Watch-logo.png"/> */}
   <div class="container" id="container">
   <img className="homelogo" src="/assets/media/Crypto-Watch-logo.png"/>
-  <div class="caption" id="slider-caption">
+  {/* <div class="caption" id="slider-caption">
     <div class="caption-heading">
       <h1>Lorem Ipsum</h1>
     </div>
@@ -18,10 +18,10 @@ const Jumbotron = props => (
   </div>
   <ul class="nav">
     <li class="slide-up"> <a href="#"></a></li>
-    <li class="slide-down"> <a id="down_button" href="#"></a></li>
-  </ul>
+    <li class="slide-down"> <a id="down_button" href="#"></a></li> */}
+  {/* </ul> */}
 </div>
-// </div>
+</div>
 
       
     

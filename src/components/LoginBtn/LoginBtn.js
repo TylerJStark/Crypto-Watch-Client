@@ -1,6 +1,6 @@
 import React from "react";
 import "./LoginBtn.css";
 
-const LoginBtn = props => <button type="button" id="loginBtn" class="btn btn-dark" data-toggle="modal" data-target="loginModal">{props.children}</button>;
+const LoginBtn = props => <a href="#" className="btn btn-lg active" id='loginBtn' role="button" aria-pressed="true">Enter</a>;
 
 export default LoginBtn;
