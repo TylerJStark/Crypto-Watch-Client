@@ -10,15 +10,11 @@ import Container from "../../Container";
 import Row from "../../Row";
 import Column from "../../Column";
 import Jumbotron from "../Jumbotron";
+import Infoboard from '../Infoboard';
+
 
 class Home extends Component {
-    // state = {
-    //     friends, 
-    //     score: 0,
-    //     highScore: 0,
-    //     rightWrong: "",
-    //     clicked: []
-    // };
+
 
     signupClick = () => {
         // <SignupModal/>
@@ -28,13 +24,17 @@ class Home extends Component {
         return (
             <div>
                     <Jumbotron/>
+                        <Infoboard/>
+                    <LogIn>Login</LogIn>
+                        <SignUp>Sign Up</SignUp>
                 <Row>
-                    <div class="col"> 
+                    <div className="col text-center"> 
                         <LogIn>Login</LogIn>
                         <SignUp>Sign Up</SignUp>
                     </div>
                 </Row>
             </div>
+        
         );
     }
 }
