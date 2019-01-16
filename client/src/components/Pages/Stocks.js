@@ -7,8 +7,10 @@ import Container from "../../Container";
 import Row from "../../Row";
 import Column from "../../Column";
 
-import API from "../../Utils/API";
+import API from "../../utils/API";
 import Chart from "../Chart";
+import ListGroup from "../ListGroup";
+import WatchlistBtn from "../WatchlistBtn";
 
 class Stocks extends Component {
 
@@ -24,6 +26,7 @@ class Stocks extends Component {
 
   componentDidMount() {
     this.getAllCoins();
+    this.getChartData();
   }
 
   getAllCoins() {
@@ -31,19 +34,21 @@ class Stocks extends Component {
       .then(res => this.setState({ allCurrencies: res.data.Data, activeStock: res.data.Data[0].CoinInfo.Name }))
       .catch(err => console.log(err));
   }
-  
-  // getInfo = query => {
-  //   API.coinInfo(query)
-  //     .then(res => {
-  //       console.log(res);
-  //       this.setState({
-  //         stockFullName: res.data.Data[0].CoinInfo.FullName,
-  //         supply: res.data.Data[0].ConversionInfo.Supply,
-  //         volume: res.data.Data[0].ConversionInfo.TotalVolume24H
-  //       })
-  //     })
-  // }
 
+  //Get one coin's info
+  getInfo = query => {
+    API.coinInfo(query)
+      .then(res => {
+        console.log(res);
+        this.setState({
+          stockFullName: res.data.Data[0].CoinInfo.FullName,
+          supply: res.data.Data[0].ConversionInfo.Supply,
+          volume: res.data.Data[0].ConversionInfo.TotalVolume24H
+        })
+      })
+  }
+
+  //Gets one coin from API
   getSpecificCoin = query => {
     API.specificCoin(query)
       .then(res => {
@@ -61,14 +66,12 @@ class Stocks extends Component {
   }
   
   //Creating all the buttons with a cryptocurreny name on it
-  createBtns() {
+  createStocks() {
     if (!this.state.allCurrencies) {
       return <div>Loading...</div>;
     } else {
       return this.state.allCurrencies.map((currency, index) =>
-        <ul key={index}>
-          <StockBtn key={index} index={index} stockClick={this.stockClick}>{currency.CoinInfo.FullName}</StockBtn>
-        </ul>
+        <ListGroup key={index} index={index} stockClick={this.stockClick}>{currency.CoinInfo.FullName}</ListGroup>
       )
     }
   }
@@ -81,8 +84,22 @@ class Stocks extends Component {
     },function() {
       console.log(this.state.activeStock);
       this.getChartData();
+      this.getInfo(this.state.activeStock);
     });
   };
+
+  //Button click to add buttons to watchlist
+  watchClick() {
+    console.log('WatchClick working');
+    //Push to database
+    // this.watchlist();
+  }
+
+  // watchlist(){
+    //Get stocks off database
+    //Add stocks to watchlist
+    // console.log('Watchlist render working');
+  // }
 
   //Needed to dynamically change the chart based on the button clicked
   constructor(){
@@ -92,13 +109,9 @@ class Stocks extends Component {
     }
   };
 
-  componentWillMount(){
-    this.getChartData();
-  };
-
+  //Creating the actual chart
   getChartData(){
     this.getSpecificCoin(this.state.activeStock);
-    // this.getInfo(this.state.activeStock);
     this.setState({
       chartData:{
         labels: ['9 Hours Ago', '8 Hours Ago', '7 Hours Ago', '6 Hours Ago', '5 Hours Ago', '4 Hours Ago', '3 Hours Ago', '2 Hours Ago', 'Current'],
@@ -119,7 +132,7 @@ class Stocks extends Component {
         <Row>
           <Column size="md-6">
             <h1 className="text-left">All Crypto Coins</h1>
-            <div>{this.createBtns()}</div>
+            <div>{this.createStocks()}</div>
           </Column>
           <Column size="md-6">
             <h1 className="text-right">Stock Graph</h1>
@@ -129,13 +142,14 @@ class Stocks extends Component {
         </Row>
         <Row>
           <Column size="md-6">
-            <h1 className="text-left">Stock Description</h1>
+            <h1 className="text-left">Stock Info</h1>
             <div>Name: {this.state.stockFullName}</div>
             <div>Supply: {this.state.supply}</div>
             <div>Total Volume Traded (24Hr): {this.state.volume}</div>
+            <WatchlistBtn watchClick={this.watchClick}/>
           </Column>
           <Column size="md-6">
-            <h1 className="text-right">User Chosen Stocks</h1>
+            <h1 className="text-right">Watchlist</h1>
           </Column>
         </Row>
       </Container>   
