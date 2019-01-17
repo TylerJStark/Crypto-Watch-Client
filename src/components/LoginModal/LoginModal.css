@@ -1,4 +1,4 @@
-*, *:after, *:before {
+/* *, *:after, *:before {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -175,8 +175,8 @@
   }
   .form label.image-replace {
     /* replace text with an icon */
-    display: inline-block;
-    position: absolute;
+    /* display: inline-block;*/
+    /* position: absolute;
     left: 15px;
     top: 50%;
     bottom: auto;
@@ -232,7 +232,7 @@
     border: 1px solid #d76666;
   }
   .form input[type=password] {
-    /* space left for the HIDE button */
+    space left for the HIDE button
     padding-right: 65px;
   }
   .form input[type=submit] {
@@ -290,7 +290,7 @@
     font-size: 13px;
     font-size: 0.8125rem;
     border-radius: 0.25em;
-    /* prevent click and touch events */
+    prevent click and touch events
     pointer-events: none;
     visibility: hidden;
     opacity: 0;
@@ -299,7 +299,7 @@
     transition: opacity 0.2s 0, visibility 0 0.2s;
   }
   .form .error-message::after {
-    /* triangle */
+    triangle
     content: '';
     position: absolute;
     left: 22px;
@@ -395,7 +395,7 @@
   }
   
   .close-form {
-    /* form X button on top right */
+    form X button on top right
     display: block;
     position: absolute;
     width: 40px;
@@ -436,4 +436,4 @@
   
   #login.is-selected, #signup.is-selected, #reset-password.is-selected {
     display: block;
-  }
+  }  */

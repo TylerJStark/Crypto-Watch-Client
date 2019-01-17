@@ -121,18 +121,10 @@ class Stocks extends Component {
 
 <div className="admin">
   <header className="admin__header">
-    <a href="#" className="logo">
+    <a className="logo">
       <h1><img src="assets/media/Crypto-Watch-logo.png">
       </img></h1>
     </a>
-    <div className="toolbar">
-      <a href="#" className="about">
-        About
-      </a>
-      <a href="#" className="logout">
-        Log Out
-      </a>
-    </div>
   </header>
   <nav className="admin__nav">
     <ul className="menu">
@@ -158,24 +150,7 @@ class Stocks extends Component {
 
   </div>
 </div>
-        {/* <div className="stockdisc">
-              <h1 className="text-left">Stock Description</h1>
-             <div>Name: {this.state.stockFullName}</div>
-             <div>Supply: {this.state.supply}</div>
-             <div>Total Volume Traded (24Hr): {this.state.volume}</div>
-           </div> */}
         </div>
-      </div>
-      <div class="dashboard__item">
-        <div class="card-container__container">
-        <div className="player-card">
-        <div className="content">
-        <img src="http://placehold.it/75x75/808080/000000"></img>
-			<h1>Crypto-Watch</h1>
-          <strong></strong>
-        </div>
-        </div>
-      </div>
       </div>
       <div class="dashboard__item dashboard__item--full">
         <div class="card-container__conatiner">
